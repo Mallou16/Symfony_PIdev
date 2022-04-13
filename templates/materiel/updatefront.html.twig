@@ -1,0 +1,100 @@
+{% extends 'base1.html.twig' %}
+
+{% block body %}
+    <div class="page">
+        <nav class="navbar navbar-expand-lg navbar-light navbar-primary" id="navbar-primary">
+            <div class="container">
+                <div class="navbar-collapse collapse">
+                    <h6 class="navbar-heading">Navigation</h6>
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#" >
+                                <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></span>
+                                <span class="nav-link-title">Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" >
+                  <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                  </span>
+                                <span class="nav-link-title">Users Management</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="content">
+            <div class="container">
+                <!-- Page title -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <h2 class="page-title">
+                                Update Materiel
+                            </h2>
+                        </div>
+                        <div class="card-header"></div>
+                        <div class="card"><!-- form -->
+                            {{ form_start(form ,{attr:{novalidate:'novalidate'}}) }}
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <div class="row">
+                                            <div class="col-md-6 col-xl-12">
+                                                <label for="exampleInputName1">Nom</label>
+
+                                                {{ form_widget(form.nom ,{ 'attr':{"placeholder":'Titre du matériel',
+                                                    "class":'Nom'}}) }}
+                                                {{ form_errors(form.nom ,{ 'attr':{'class':'text-danger'}}) }}
+
+                                                <label for="exampleInputName2">Quantite</label>
+                                                {{ form_widget(form.quantite ,{ 'attr':{"placeholder":'Quantite du matériel',
+                                                    "class":'Quantite'}}) }}
+                                                {{ form_errors(form.quantite ,{ 'attr':{'class':'text-danger'}}) }}
+
+                                                <label for="exampleInputName3">Prix</label>
+                                                {{ form_widget(form.prix ,{ 'attr':{"placeholder":'prix de lunité',
+                                                    "class":'Prix'}}) }}
+                                                {{ form_errors(form.prix ,{ 'attr':{'class':'text-danger'}}) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="row">
+                                            <div class="col-md-6 col-xl-12">
+                                                <label for="exampleInputName4">Etat</label>
+                                                {{ form_widget(form.etat ,{ 'attr':{"placeholder":'letat du matériel',
+                                                    "class":'Etat'}}) }}
+                                                {{ form_errors(form.etat ,{ 'attr':{'class':'text-danger'}}) }}
+                                                <label for="exampleTextarea1">Description</label>
+                                                {{ form_widget(form.description ,{ 'attr':{"placeholder":'description du matériel',
+                                                    "class":'Description', "rows":'4'}}) }}
+                                                {{ form_errors(form.description ,{ 'attr':{'class':'text-danger'}}) }}
+                                                <div class="form-group">
+                                                    <div class="input-group col-xs-12">
+                                                        {{ form_row(form.image ,{ 'attr':{ 'class':'file-upload-browse btn btn-primary'
+                                                        }}) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-right">
+                                <div class="d-flex">
+                                    {{ form_widget(form) }}
+                                    <a href="#" class="btn btn-link">Cancel</a>
+                                    <!--<button type="submit" class="btn btn-primary ml-auto">Confirm</button>-->
+                                </div>
+                            </div>
+                            {{ form_end(form) }}
+                        </div><!-- /form -->
+                    </div>
+                </div>
+            </div>
+            <!--footer ... -->
+        </div>
+    </div>
+{% endblock %}
