@@ -14,7 +14,6 @@ class Materiel
 {
     /**
      * @var int
-     *
      * @ORM\Column(name="ID_Materiel", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -22,12 +21,13 @@ class Materiel
     private $idMateriel;
 
     /**
+     * @var string
      * @Assert\NotBlank(message=" le nom doit etre non vide")
      * @Assert\Regex (pattern="/^[a-zA-Z ]+$/i")
      * @Assert\Length(
      *      min = 3,
      *      minMessage=" Entrer un titre au mini de 3 caracteres")
-     * @ORM\Column(name="Nom", type="string", length=255)
+     * @ORM\Column(name="Nom", type="string", length=20, nullable=false)
      */
     private $nom;
 
@@ -42,29 +42,31 @@ class Materiel
     /**
      * @var float
      * @Assert\NotBlank(message="prix de l'unite doit etre non vide")
-     * @Assert\Positive (message="The value should be positive ")
+     * @Assert\Positive(message="The value should be positive ")
      * @ORM\Column(name="Prix", type="float", precision=10, scale=0, nullable=false)
      */
     private $prix;
 
     /**
+     * @var string
      * @Assert\NotBlank(message="etat doit etre non vide")
-     * @Assert\Regex (pattern="/^[a-zA-Z]+$/i")
-     * @ORM\Column(name="Etat", type="string", length=1000)
+     * @Assert\Regex (pattern="/^[a-zA-Z ]+$/i")
+     * @ORM\Column(name="Etat", type="string", length=20, nullable=false)
      */
     private $etat;
 
     /**
+     * @var string|null
      * @Assert\NotBlank(message="description doit etre non vide")
-     * @Assert\Regex (pattern="/^[a-zA-Z]+$/i")
+     * @Assert\Regex (pattern="/^[a-zA-Z ]+$/i")
      * @Assert\Length(
      *      min = 7,
-     *      max = 100,
+     *      max = 300,
      *      minMessage = "doit etre >=7 ",
-     *      maxMessage = "doit etre <=100" )
-     * @ORM\Column(name="Description", type="string", length=1000)
+     *      maxMessage = "doit etre <=300" )
+     * @ORM\Column(name="Description", type="string", length=50, nullable=true, options={"default"="NULL"})
      */
-    private $description ;
+    private $description;
 
     /**
      * @var string
@@ -73,82 +75,149 @@ class Materiel
      */
     private $image;
 
-    public function getIdMateriel(): ?int
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Panier", mappedBy="idMateriel")
+     */
+    private $idPanier;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->idPanier = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdMateriel(): int
     {
         return $this->idMateriel;
     }
 
-    public function getNom(): ?string
+    /**
+     * @param int $idMateriel
+     */
+    public function setIdMateriel(int $idMateriel): void
+    {
+        $this->idMateriel = $idMateriel;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNom()
     {
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    /**
+     * @param string $nom
+     */
+    public function setNom(string $nom): void
     {
         $this->nom = $nom;
-
-        return $this;
     }
 
-    public function getQuantite(): ?int
+    /**
+     * @return int
+     */
+    public function getQuantite()
     {
         return $this->quantite;
     }
 
-    public function setQuantite(int $quantite): self
+    /**
+     * @param int $quantite
+     */
+    public function setQuantite(int $quantite): void
     {
         $this->quantite = $quantite;
-
-        return $this;
     }
 
-    public function getPrix(): ?float
+    /**
+     * @return float
+     */
+    public function getPrix()
     {
         return $this->prix;
     }
 
-    public function setPrix(float $prix): self
+    /**
+     * @param float $prix
+     */
+    public function setPrix(float $prix): void
     {
         $this->prix = $prix;
-
-        return $this;
     }
 
-    public function getEtat(): ?string
+    /**
+     * @return string
+     */
+    public function getEtat()
     {
         return $this->etat;
     }
 
-    public function setEtat(string $etat): self
+    /**
+     * @param string $etat
+     */
+    public function setEtat(string $etat): void
     {
         $this->etat = $etat;
-
-        return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(?string $description): self
+    /**
+     * @param string|null $description
+     */
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
-
-        return $this;
     }
 
-    public function getImage(): ?string
+    /**
+     * @return string
+     */
+    public function getImage()
     {
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    /**
+     * @param string $image
+     */
+    public function setImage($image): void
     {
         $this->image = $image;
-
-        return $this;
     }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIdPanier()
+    {
+        return $this->idPanier;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\Collection $idPanier
+     */
+    public function setIdPanier($idPanier): void
+    {
+        $this->idPanier = $idPanier;
+    }
+
 
 
 }

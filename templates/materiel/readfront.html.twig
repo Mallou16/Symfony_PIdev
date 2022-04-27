@@ -1,7 +1,6 @@
 {% extends 'base1.html.twig' %}
 
 {% block body %}
-
     <!--doctype html-->
     <!--
     * Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
@@ -26,10 +25,24 @@
                             </a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="#" >
+                            <a class="nav-link" href="{{ path('ReadF') }}" >
                   <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
                   </span>
                                 <span class="nav-link-title">Campy Market</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{ path('ReadPEC') }}" >
+                  <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                  </span>
+                                <span class="nav-link-title">Mes achats</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="{{ path('Recu') }}" target="_blank">
+                  <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                  </span>
+                                <span class="nav-link-title">Réçu d'achat</span>
                             </a>
                         </li>
                     </ul>
@@ -50,24 +63,49 @@
                         <div class="card-body border-bottom py-3">
                             <div class="d-flex">
                                 <h3 class="card-title">Liste Materiel</h3>
-                                <div class="ml-auto text-muted">
-                                    <div class="col-10 col-sm-4 col-md-12 col-xl mb-13">
-                                        <a class="btn btn-info btn-block" href="{{ path('addfront') }}">Add Materiel</a>
-                                    </div>
-                                </div>
                             </div>
+                            {{ form_start(form , {'action': path('search'), 'method': 'POST'}) }}
+                            <div class="d-flex">
+                                <div class="input-icon mb-3">
+                                    <!--<input type="text" class="form-control" placeholder="Chercher par le nom ..">-->
+                                    {{ form_row(form.nom ,{'attr':{"placeholder":'Chercher par le nom ..'}}) }}
+                                    <span class="input-icon-addon">
+                                  <!-- Download SVG icon from http://tabler-icons.io/i/search -->
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="10" cy="10" r="7" /><line x1="21" y1="21" x2="15" y2="15" /></svg>
+                                </span>
+                                </div>
+                                <div class="input-icon mb-3 px-2">
+                                    <!--<input type="text" class="form-control" placeholder="Chercher par le prix ..">-->
+                                    {{ form_row(form.prix ,{'attr':{"placeholder":'Chercher par le prix ..'}}) }}
+                                    <span class="input-icon-addon">
+                                  <!-- Download SVG icon from http://tabler-icons.io/i/search -->
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="10" cy="10" r="7" /><line x1="21" y1="21" x2="15" y2="15" /></svg>
+                                </span>
+                                </div>
+                                <div class="input-icon mb-3 px-2">
+                                    <!--<input type="text" class="form-control" placeholder="Chercher par la quantité ..">-->
+                                    {{ form_row(form.quantite ,{'attr':{"placeholder":'Chercher par la quantité ..'}}) }}
+                                    <span class="input-icon-addon">
+                                  <!-- Download SVG icon from http://tabler-icons.io/i/search -->
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="10" cy="10" r="7" /><line x1="21" y1="21" x2="15" y2="15" /></svg>
+                                </span>
+                                </div>
+                                {{ form_row(form.Search) }}
+                            </div>
+                            {{ form_end(form) }}
                         </div>
                         <div class="table-responsive">
                             <table class="table card-table table-vcenter text-nowrap datatable">
                                 <thead>
                                 <tr>
-                                    <th>Nom <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></th>
-                                    <th>Quantite <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></th>
-                                    <th>prix <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></th>
+                                    <th>Nom <a href="{{ path('trinom') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></a></th>
+                                    <th>Quantite <a href="{{ path('triquantite') }}"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></a></th>
+                                    <th>prix <a href="{{ path('triprix') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></a></th>
                                     <th>Etat <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></th>
                                     <th>Description <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></th>
                                     <th>Buy <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></th>
                                     <th>Edit <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></th>
+                                    <th>Show Article <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -77,48 +115,28 @@
                                     <td>{{ i.getPrix() }}</td>
                                     <td>{{ i.getEtat }}</td>
                                     <td>{{ i.getDescription() }}</td>
-                                    <td><a data-toggle="modal" data-target="#modal-report" class="btn btn-primary"> Buy </a></td>
+                                   <!-- <form action="" method="POST">
+                                    <td><input type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal-report" value="Buy"></td>
+                                    </form>-->
+                                    <td><a href="{{ path('setidquantity',{'idmateriel':i.getIdMateriel() , 'quantitemat':i.getQuantite()}) }}" class="btn btn-primary">Buy</a></td>
                                     <td><a href="{{ path('updatefront',{'id':i.getIdMateriel()}) }}" class="btn btn-outline-secondary btn-icon-text"> Edit </a></td>
+                                    <td><a target="_blank" href="{{ path('showarticle',{'image':i.getImage() , 'description':i.getDescription()}) }}" class="btn btn-outline-warning w-100"> Show Image </a></td>
                                 </tr {% endfor %} >
                                 </tbody>
                             </table>
+                            <hr>
+                            <div class="d-flex">
+                            <div class="ml-auto text-muted">
+                                <div class="col-10 col-sm-4 col-md-12 col-xl mb-13">
+                                    <a class="btn btn-info btn-block" href="{{ path('addfront') }}">Add Materiel</a>
+                                </div>
+                            </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <!--footer-->
             </div>
         </div>
-    <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Materiel</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                    </button>
-                </div>
-                <form id="form_edit" name="form_edit" method="post" action="#">
-                    <div class="modal-body">
-                        <input type="hidden" name="modal_id" id="modal_id" value="0">
-                        <div class="row">
-                            <div class="col-lg-8">
-                                <div class="mb-3">
-                                    <label class="form-label">Quantite demandé</label>
-                                    <div class="input-group input-group-flat">
-                                        <input type="text" class="form-control" name="cs_nm_form" id="cs_nm_form"  placeholder="Saisir la quantite que vous souhaite ..." pattern="[1-9]+[0-9]*" type="required">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#" class="btn btn-link link-secondary" data-dismiss="modal">
-                            Cancel
-                        </a>
-                        <input type="submit" class="btn btn-primary ml-auto" value="Confirm">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+
 {% endblock %}

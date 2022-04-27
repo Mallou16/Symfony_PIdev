@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -59,5 +61,20 @@ class Panierencours
         return $this;
     }
 
+    /**
+     * @param int $idPanier
+     */
+    public function setIdPanier(int $idPanier): void
+    {
+        $this->idPanier = $idPanier;
+    }
+
+    /**
+     * @param int $idMateriel
+     */
+    public function setIdMateriel(int $idMateriel): void
+    {
+        $this->idMateriel = $idMateriel;
+    }
 
 }

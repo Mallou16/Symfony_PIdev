@@ -42,46 +42,5 @@ class Sponsor
      */
     private $numTel;
 
-    public function getIdSponsor(): ?int
-    {
-        return $this->idSponsor;
-    }
-
-    public function getAdresse(): ?string
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(string $adresse): self
-    {
-        $this->adresse = $adresse;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getNumTel(): ?int
-    {
-        return $this->numTel;
-    }
-
-    public function setNumTel(int $numTel): self
-    {
-        $this->numTel = $numTel;
-
-        return $this;
-    }
-
 
 }

@@ -1,0 +1,48 @@
+{% extends 'base1.html.twig' %}
+
+{% block body %}
+    <!--doctype html-->
+    <!--
+    * Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
+    * @version 1.0.0-alpha.4
+    * @link https://github.com/tabler/tabler
+    * Copyright 2018-2019 The Tabler Authors
+    * Copyright 2018-2019 codecalm.net Paweł Kuna
+    * Licensed under MIT (https://tabler.io/license)
+    -->
+    <h2 class="page-title">
+        Historique des achats:
+    </h2>
+    <hr>
+
+    {% set datem="" %}
+    {% for r in listh %}
+        {% if (r.getDate()!=datem) %}
+            {{ r.getDate() }}
+            {% set Totale=0 %}
+    <table>
+        <tr>
+            <th>Nom</th>
+            <th>Quantite</th>
+            <th>Prix unitaire</th>
+            <th>Prix Totale</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for i in listh %}
+        <tr {% if (i.getDate()==r.getDate()) %}>
+            <td>{{ i.getNomMateriel() }}</td>
+            <td>{{ i.getQuantite() }}</td>
+            <td>{{ i.getPrixu() }}</td>
+            <td>{{ i.getQuantite()*i.getPrixu() }}</td>
+            {% set Totale= Totale + i.getQuantite()*i.getPrixu() %}
+        </tr {% endif %}>
+            {% endfor %}
+        </tbody>
+    </table>
+            La somme du panier est ={{ Totale }}
+            <hr>
+        {% endif %}
+        {% set datem=r.getDate() %}
+    {% endfor %}
+{% endblock %}

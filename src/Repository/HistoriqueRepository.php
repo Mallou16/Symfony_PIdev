@@ -2,30 +2,30 @@
 
 namespace App\Repository;
 
-use App\Entity\Panier;
+use App\Entity\Historique;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Panier|null find($id, $lockMode = null, $lockVersion = null)
- * @method Panier|null findOneBy(array $criteria, array $orderBy = null)
- * @method Panier[]    findAll()
- * @method Panier[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Historique|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Historique|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Historique[]    findAll()
+ * @method Historique[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PanierRepository extends ServiceEntityRepository
+class HistoriqueRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Panier::class);
+        parent::__construct($registry, Historique::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Panier $entity, bool $flush = true): void
+    public function add(Historique $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -37,7 +37,7 @@ class PanierRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Panier $entity, bool $flush = true): void
+    public function remove(Historique $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -46,7 +46,7 @@ class PanierRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Panier[] Returns an array of Panier objects
+    //  * @return Historique[] Returns an array of Historique objects
     //  */
     /*
     public function findByExampleField($value)
@@ -63,7 +63,7 @@ class PanierRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Panier
+    public function findOneBySomeField($value): ?Historique
     {
         return $this->createQueryBuilder('m')
             ->andWhere('m.exampleField = :val')

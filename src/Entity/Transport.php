@@ -42,46 +42,5 @@ class Transport
      */
     private $dispoT;
 
-    public function getIdT(): ?int
-    {
-        return $this->idT;
-    }
-
-    public function getNbrtPlace(): ?int
-    {
-        return $this->nbrtPlace;
-    }
-
-    public function setNbrtPlace(int $nbrtPlace): self
-    {
-        $this->nbrtPlace = $nbrtPlace;
-
-        return $this;
-    }
-
-    public function getTypeT(): ?string
-    {
-        return $this->typeT;
-    }
-
-    public function setTypeT(string $typeT): self
-    {
-        $this->typeT = $typeT;
-
-        return $this;
-    }
-
-    public function getDispoT(): ?bool
-    {
-        return $this->dispoT;
-    }
-
-    public function setDispoT(bool $dispoT): self
-    {
-        $this->dispoT = $dispoT;
-
-        return $this;
-    }
-
 
 }
