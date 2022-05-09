@@ -1,7 +1,10 @@
 {% extends 'base1.html.twig' %}
 
 {% block body %}
-
+    <!--<link href="{-{ asset('assets/frontend/dist/css/demo.min.css?1649661161') }}" rel="stylesheet"/>
+    <link href="{-{ asset('assets/frontend/dist/css/tabler-vendors.min.css?1649661161') }}" rel="stylesheet"/>
+    <link href="{-{ asset('assets/frontend/dist/css/tabler-flags.min.css?1649661161') }}" rel="stylesheet"/>
+    <link href="{-{ asset('assets/frontend/dist/css/tabler-payments.min.css?1649661161') }}" rel="stylesheet"/>-->
 <!--doctype html-->
 <!--
 * Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
@@ -13,53 +16,34 @@
 -->
 
 <div class="page">
-    <nav class="navbar navbar-expand-lg navbar-light navbar-primary" id="navbar-primary">
-        <div class="container">
-            <div class="navbar-collapse collapse">
-                <h6 class="navbar-heading">Navigation</h6>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" >
-                  <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                  </span>
-                            <span class="nav-link-title">Home</span>
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="{{ path('ReadF') }}" >
-                  <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-                  </span>
-                            <span class="nav-link-title">Campy Market</span>
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('ReadPEC') }}" >
-                  <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-                  </span>
-                            <span class="nav-link-title">Mes achats</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="{{ path('Recu') }}" target="_blank">
-                  <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-                  </span>
-                            <span class="nav-link-title">Réçu d'achat</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <div class="container d-flex align-items-center justify-content-between">
+    <nav id="navbar" class="navbar">
+        <ul>
+            <li><a><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                  </span>Home</a></li>
+            <li><a href="{{ path('ReadF') }}"><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                  </span>Campy Market</a></li>
+            <li><a class="active" href="{{ path('ReadPEC') }}"><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                  </span>Mes achats</a></li>
+            <li><a href="{{ path('Recu') }}" target="_blank"><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                  </span>Réçu d'achat</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
     </nav>
+    </div>
     <div class="content">
         <div class="container">
             <!-- Page title -->
             <div class="page-header">
                 <div class="row align-items-center">
-                    <div class="card-body border-bottom py-3">
-                        <div class="d-flex">
-                            <h3 class="card-title">Liste des achats</h3>
-                        </div>
+                    <div class="py-3"></div>
+                    <div class="col-auto">
+                        <h2 class="page-title">
+                            Liste des achats
+                        </h2>
                     </div>
+                    <div class="card-header"></div>
+                    <div class="card-body border-bottom py-3"></div>
                     <div class="table-responsive">
                         <table class="table card-table table-vcenter text-nowrap datatable">
                                 <thead>
@@ -92,7 +76,7 @@
                                 </div>
                                 <div class="ml-auto text-muted">
                                     <div class="col-10 col-sm-4 col-md-12 col-xl mb-13">
-                                        <a class="btn btn-info btn-block px-4" data-toggle="modal" data-target="#modal-success">Buy All
+                                        <a class="btn btn-info btn-block px-4" data-bs-toggle="modal" data-bs-target="#modal-success">Buy All
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coin" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                                 <circle cx="12" cy="12" r="9"></circle>
@@ -111,7 +95,7 @@
         </div>
     </div>
     <div class="modal modal-blur fade" id="modal-success" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document" >
+    <div class="modal-dialog modal-lg" role="document" >
         <div class="modal-content">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             <div class="modal-status bg-success"></div>
@@ -136,4 +120,5 @@
         </div>
     </div>
     </div>
+    <!--<script src="{'{ asset('assets/frontend/dist/js/demo.min.js?1649661161') }}" defer></script>-->
     {% endblock %}

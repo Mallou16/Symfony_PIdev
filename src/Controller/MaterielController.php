@@ -296,7 +296,6 @@ class MaterielController extends AbstractController
      */
     public function ShowArticle($image , $description){
         $img = "/assets/frontend/dist/img/".$image;
-
         return $this->render('materiel/image.html.twig',[
           'image' => $img  , 'description' => $description
         ]);
