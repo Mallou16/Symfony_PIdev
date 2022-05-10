@@ -300,4 +300,32 @@ class MaterielController extends AbstractController
           'image' => $img  , 'description' => $description
         ]);
     }
+
+    /**
+     * @param MaterielRepository $repository
+     * @return Response
+     * @Route("/Statistique",name="stats")
+     */
+    public function Statistique(MaterielRepository $repository){
+        $materiel = $repository->countMateriel();
+        $materiels = $repository->findAll();
+        foreach ($materiel as $row1){
+            $count=$row1['count'];
+            $qtot=$row1['qtot'];
+        }
+        $dates = [];
+        $mCount = [];
+        foreach($materiels as $row){
+            $dates[] = $row->getNom();
+            $mCount[] = ( $row->getQuantite() / intval($qtot))*100;
+        }
+
+        return $this->render('materiel/stats.html.twig', [
+            'dates' => json_encode($dates),
+            'MaterielCount' => json_encode($mCount),
+            'QuantiteTotale' => json_encode(intval($qtot)),
+        ]);
+       // return $this->render('materiel/stats.html.twig',[
+       // ]);
+    }
 }

@@ -84,6 +84,16 @@ class MaterielRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @return void
+     */
+    public function countMateriel(){
+        $query = $this->createQueryBuilder('m')
+            ->select('COUNT(m) as count, SUM(m.quantite) as qtot')
+        ;
+        return $query->getQuery()->getResult();
+    }
+
 
     /*
     public function findOneBySomeField($value): ?Materiel

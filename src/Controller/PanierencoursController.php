@@ -5,8 +5,8 @@ use App\Entity\Historique;
 use App\Entity\Panierencours;
 use App\Repository\HistoriqueRepository;
 use phpDocumentor\Reflection\Types\Void_;
-use Symfony\Component\Notifier\Message\SmsMessage;
-use Symfony\Component\Notifier\TexterInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use App\Entity\Materiel;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -43,44 +43,43 @@ class PanierencoursController extends AbstractController
      * @Route("/ReadPEC",name="ReadPEC")
      */
 
-    public function ReadPanierencours(PanierRepository $repository , PanierencoursRepository $rep)
+    public function ReadPanierencours(PanierRepository $repository, PanierencoursRepository $rep)
     {
         //$rep=$this->getDoctrine()->getRepository(Materiel::class);
-        $Panier=$repository->findBy(array('idPanier' => 1));
-        $Panierencours=$rep->findBy(array('idPanier' => 1));
+        $Panier = $repository->findBy(array('idPanier' => 1));
+        $Panierencours = $rep->findBy(array('idPanier' => 1));
         foreach ($Panier as $row) {
             $Materiel = $row->getIdMateriel();
         }
-        $pm=array();
-        $somme=0;
-        foreach ($Panierencours as $row)
-        {
-            foreach ($Materiel as $row1)
-            {
-                if ($row->getIdMateriel()==$row1->getIdMateriel()){
-                    $pm1=array(
+        $pm = array();
+        $somme = 0;
+        foreach ($Panierencours as $row) {
+            foreach ($Materiel as $row1) {
+                if ($row->getIdMateriel() == $row1->getIdMateriel()) {
+                    $pm1 = array(
                         'id' => $row->getIdMateriel(),
                         'nom' => $row1->getNom(),
                         'quantiteP' => $row->getQuantiteP(),
                         'prixU' => $row1->getPrix(),
-                        'prixTotale' => $row->getQuantiteP()*$row1->getPrix()
+                        'prixTotale' => $row->getQuantiteP() * $row1->getPrix()
                     );
-                    $somme+=$row->getQuantiteP()*$row1->getPrix();
-                    array_push($pm,$pm1);
+                    $somme += $row->getQuantiteP() * $row1->getPrix();
+                    array_push($pm, $pm1);
                 }
             }
         }
         return $this->render('panierencours/index.html.twig',
-           ['pm'=>$pm , 'somme' =>$somme]
+            ['pm' => $pm, 'somme' => $somme]
         );
     }
 
     /**
      * @Route("/DeleteFromPanier/{id}",name="deletefrontpanier")
      */
-    public function DeleteFromPanierEnCours(PanierencoursRepository $repository , $id){
-        $Panierencours=$repository->find(array ('idPanier' => 1, 'idMateriel' => $id));
-        $em=$this->getDoctrine()->getManager();
+    public function DeleteFromPanierEnCours(PanierencoursRepository $repository, $id)
+    {
+        $Panierencours = $repository->find(array('idPanier' => 1, 'idMateriel' => $id));
+        $em = $this->getDoctrine()->getManager();
         $em->remove($Panierencours);
         $em->flush();
         return $this->redirectToRoute('ReadPEC');
@@ -90,25 +89,25 @@ class PanierencoursController extends AbstractController
      * @return Response
      * @Route("/Set/{idmateriel}/{quantitemat}", name="setidquantity")
      */
-    public function SetIDandQuantite(PanierencoursRepository $repository , MaterielRepository $rep ,$idmateriel , $quantitemat ){
-        $Panierencours=new Panierencours();
+    public function SetIDandQuantite(PanierencoursRepository $repository, MaterielRepository $rep, $idmateriel, $quantitemat)
+    {
+        $Panierencours = new Panierencours();
         $Search = new Search();
-        $form1=$this->createForm(SearchType::class,$Search);
-        $form1->add('Search',SubmitType::class);
-        $form=$this->createForm(PanierEnCoursType::class,$Panierencours);
-        $form->add('Confirm',SubmitType::class);
-        $Materiel=$rep->findAll();
-        $Panierencours1=$repository->find(array ('idPanier' => 1, 'idMateriel' => $idmateriel));
-        if ($Panierencours1== null ) {
-            return $this->render('materiel/quantity.html.twig',[
-                'idmateriel'=>$idmateriel , 'quantitemat' =>$quantitemat , 'f'=>$form->createView() , 'error'=>false
+        $form1 = $this->createForm(SearchType::class, $Search);
+        $form1->add('Search', SubmitType::class);
+        $form = $this->createForm(PanierEnCoursType::class, $Panierencours);
+        $form->add('Confirm', SubmitType::class);
+        $Materiel = $rep->findAll();
+        $Panierencours1 = $repository->find(array('idPanier' => 1, 'idMateriel' => $idmateriel));
+        if ($Panierencours1 == null) {
+            return $this->render('materiel/quantity.html.twig', [
+                'idmateriel' => $idmateriel, 'quantitemat' => $quantitemat, 'f' => $form->createView(), 'error' => false
             ]);
-        }
-        else {
-            $alert=true;
-            echo "<script>alert(\"Vous avez déjà choisi ce matériel..\")</script>" ;
-            return $this->render('materiel/readfront.html.twig',[
-                'form'=>$form1->createView() , 'f'=>$form->createView() , 'materiel'=>$Materiel
+        } else {
+            $alert = true;
+            echo "<script>alert(\"Vous avez déjà choisi ce matériel..\")</script>";
+            return $this->render('materiel/readfront.html.twig', [
+                'form' => $form1->createView(), 'f' => $form->createView(), 'materiel' => $Materiel
             ]);
         }
     }
@@ -121,15 +120,16 @@ class PanierencoursController extends AbstractController
      * @return Response
      * @Route("/AddPanierEnCours/{idmateriel}/{quantitemat}",name="AddPEC")
      */
-    public function AddPanierEnCours(Request $request , $idmateriel , $quantitemat){
-        $Panierencours=new Panierencours();
-        $form=$this->createForm(PanierEnCoursType::class,$Panierencours);
-        $form->add('Confirm',SubmitType::class);
-      //  $form->handleRequest($request);
+    public function AddPanierEnCours(Request $request, $idmateriel, $quantitemat)
+    {
+        $Panierencours = new Panierencours();
+        $form = $this->createForm(PanierEnCoursType::class, $Panierencours);
+        $form->add('Confirm', SubmitType::class);
+        //  $form->handleRequest($request);
         if ($request->isMethod('POST')) {
             $form->submit($request->request->get($form->getName()));
             if ($form->isSubmitted() && $form->isValid()) {
-                $qtp =$Panierencours->getQuantiteP();
+                $qtp = $Panierencours->getQuantiteP();
                 if (intval($qtp) <= intval($quantitemat)) {
                     $Panierencours->setQuantiteP($qtp);
                     $Panierencours->setIdMateriel($idmateriel);
@@ -138,10 +138,9 @@ class PanierencoursController extends AbstractController
                     $em->persist($Panierencours);
                     $em->flush();
                     return $this->redirectToRoute('ReadPEC');
-                }
-                else{
-                    return $this->render('materiel/quantity.html.twig',[
-                        'idmateriel'=>$idmateriel , 'quantitemat' =>$quantitemat , 'f'=>$form->createView() , 'error'=>true
+                } else {
+                    return $this->render('materiel/quantity.html.twig', [
+                        'idmateriel' => $idmateriel, 'quantitemat' => $quantitemat, 'f' => $form->createView(), 'error' => true
                     ]);
                 }
 
@@ -154,35 +153,45 @@ class PanierencoursController extends AbstractController
      * @param PanierencoursRepository $rep
      * @param PanierRepository $repository
      * @param HistoriqueRepository $repo
+     * @param MailerInterface $mailer
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      * @return Response
      * @Route("/ConfirmBuy" , name="confirmation")
      */
-    public function ConfirmBuy(PanierencoursRepository $rep , PanierRepository $repository , HistoriqueRepository $repo){
-        $Panier=$repository->findBy(array('idPanier' => 1));
-        $Panierencours=$rep->findBy(array('idPanier' => 1));
+    public function ConfirmBuy(PanierencoursRepository $rep, PanierRepository $repository, MailerInterface $mailer, HistoriqueRepository $repo)
+    {
+        $Panier = $repository->findBy(array('idPanier' => 1));
+        $Panierencours = $rep->findBy(array('idPanier' => 1));
         foreach ($Panier as $row) {
             $Materiel = $row->getIdMateriel();
         }
-            foreach ($Panierencours as $row)
-            {
-                foreach ($Materiel as $row1)
-                {
-                    if ($row->getIdMateriel()==$row1->getIdMateriel()){
-                        $Historique=new Historique();
-                        $Historique->setIdpanier(1);
-                        $Historique->setNomMateriel($row1->getNom());
-                        $Historique->setQuantite($row->getQuantiteP());
-                        $Historique->setPrixu($row1->getPrix());
-                        $Historique->setDate(date('d/m/Y'));
-                        $row1->setQuantite($row1->getQuantite()-$row->getQuantiteP());
-                        $em=$this->getDoctrine()->getManager();
-                        $Panierencours1=$rep->find(array ('idPanier' => 1, 'idMateriel' => $row->getIdMateriel()));
-                        $em->persist($Historique);
-                        $em->remove($Panierencours1);
-                        $em->flush();
-                    }
+        $text = "Vous avez effectué un achat de: \n";
+        foreach ($Panierencours as $row) {
+            foreach ($Materiel as $row1) {
+                if ($row->getIdMateriel() == $row1->getIdMateriel()) {
+                    $Historique = new Historique();
+                    $Historique->setIdpanier(1);
+                    $Historique->setNomMateriel($row1->getNom());
+                    $Historique->setQuantite($row->getQuantiteP());
+                    $Historique->setPrixu($row1->getPrix());
+                    $Historique->setDate(date('d/m/Y'));
+                    $row1->setQuantite($row1->getQuantite() - $row->getQuantiteP());
+                    $em = $this->getDoctrine()->getManager();
+                    $Panierencours1 = $rep->find(array('idPanier' => 1, 'idMateriel' => $row->getIdMateriel()));
+                    $em->persist($Historique);
+                    $text .= "". strval($row->getQuantiteP()) . " de type " . $row1->getNom() . "\n";
+                    $em->remove($Panierencours1);
+                    $em->flush();
                 }
             }
+        }
+        $text .= "Merci pour votre visite";
+        $email = (new TemplatedEmail())
+            ->from("ziedlazrag7@gmail.com")
+            ->to("zied.lazrag@esprit.tn")
+            ->subject('Achat Confirmé !')
+            ->text($text);
+        $mailer->send($email);
         return $this->redirectToRoute('ReadF');
     }
 
@@ -191,7 +200,8 @@ class PanierencoursController extends AbstractController
      * @return Response
      * @Route("/Recu" , name="Recu")
      */
-    public function Recu(HistoriqueRepository $repository){
+    public function Recu(HistoriqueRepository $repository)
+    {
         // Configure Dompdf according to your needs
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Arial');
@@ -199,12 +209,12 @@ class PanierencoursController extends AbstractController
         // Instantiate Dompdf with our options
         $dompdf = new Dompdf($pdfOptions);
 
-        $historique=$repository->findBy(array('idpanier' => 1));
+        $historique = $repository->findBy(array('idpanier' => 1));
         $var = count($historique);
-        $var = floor(count($historique)/2)+1;
+        $var = floor(count($historique) / 2) + 1;
         // Retrieve the HTML generated in our twig file
         $html = $this->renderView('panierencours/pdfrecu.html.twig', [
-            'listh' => $historique , 'length' => $var
+            'listh' => $historique, 'length' => $var
         ]);
 
         // Load HTML to Dompdf
@@ -222,18 +232,4 @@ class PanierencoursController extends AbstractController
         ]);
     }
 
-   /* /**
-     * @param TexterInterface $texter
-     * @return void
-     * @Route("/BuySuccess" , name="buysuccess")
-     */
-  /*  public function Sendsms(TexterInterface $texter){
-        $sms = new SmsMessage(
-        // the phone number to send the SMS message to
-            '+21628681688',
-            // the message
-            'A new login was detected!'
-        );
-        $sentMessage = $texter->send($sms);
-    }*/
-  }
+}

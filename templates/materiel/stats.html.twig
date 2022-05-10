@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="navbar-brand-wrapper d-flex align-items-center">
+            <a class="navbar-brand brand-logo" href="index.html">
+                <img src="assets/backend/images/logo.svg" alt="logo" class="logo-dark" />
+            </a>
+            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/backend/images/logo-mini.svg" alt="logo" /></a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-center flex-grow-1">
+            <h5 class="mb-0 font-weight-medium d-none d-lg-flex">Welcome To Campy!</h5>
+            <ul class="navbar-nav navbar-nav-right ml-auto"></ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                <span class="icon-menu"></span>
+            </button>
+        </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                <li class="nav-item nav-profile">
+                    <a href="#" class="nav-link">
+                        <div class="profile-image">
+                            <img class="img-xs rounded-circle" src="assets/backend/images/faces/face8.jpg" alt="profile image">
+                            <div class="dot-indicator bg-success"></div>
+                        </div>
+                        <div class="text-wrapper">
+                            <p class="profile-name">LAZRAG Zied</p>
+                            <p class="designation">Administrator</p>
+                        </div>
+                        <div class="icon-container">
+                            <i class="icon-bubbles"></i>
+                            <div class="dot-indicator bg-danger"></div>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item nav-category">
+                    <span class="nav-link">Dashboard</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/ReadMateriel">
+                        <span class="menu-title">Read Materiel</span>
+                        <i class="icon-globe menu-icon"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/AddMateriel">
+                        <span class="menu-title">Add Materiel</span>
+                        <i class="icon-book-open menu-icon"></i>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/Statistique">
+                        <span class="menu-title">Stats</span>
+                        <i class="icon-chart menu-icon"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- partial -->
+       <!-- <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-md-4 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Top sell</h4>
+                                <div class="aligner-wrapper">
+                                    <canvas id="sessionsDoughnutChart" height="300"></canvas>
+                                    <div class="wrapper d-flex flex-column justify-content-center absolute absolute-center">
+                                        <h2 class="text-center mb-0 font-weight-bold">8.234</h2>
+                                        <small class="d-block text-center text-muted  font-weight-semibold mb-0">Total Leads</small>
+                                    </div>
+                                </div>
+                                <div class="wrapper mt-4 d-flex flex-wrap align-items-center">
+                                    <div class="d-flex">
+                                        <span class="square-indicator bg-danger ml-2"></span>
+                                        <p class="mb-0 ml-2">{-{ MaterielCount }}</p>
+                                    </div>
+                                    <div class="d-flex">
+                                        <span class="square-indicator bg-success ml-2"></span>
+                                        <p class="mb-0 ml-2">{-{ QuantiteTotale }}</p>
+                                    </div>
+                                    <div class="d-flex">
+                                        <span class="square-indicator bg-warning ml-2"></span>
+                                        <p class="mb-0 ml-2">Reassigned</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous">
+
+
+        <div class="container">
+            <h1>Statistiques</h1>
+            <canvas id="evenements" width="300" height="100"></canvas>
+            <hr>
+            <canvas id="categories" width="400" height="100"></canvas>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+        <script>
+
+            //let count = document.querySelector("#count")
+            let annGraph = new Chart(evenements, {
+                type: "pie",
+                data: {
+                    labels: {{ dates|raw }},
+                    datasets: [{
+                        label: "Pourcentage du matériel au stock",
+                        data: {{ MaterielCount|raw }},
+                        backgroundColor: ["pink","green","blue","brown","black","white"]
+
+                    }]
+                },
+            })
+        </script>
+        <script>
+
+            //let count = document.querySelector("#count")
+            let annGraphh = new Chart(categories, {
+                type: "bar",
+                data: {
+                    labels: {{ dates|raw }},
+                    datasets: [{
+                        label: "Pourcentage du matériel au stock",
+                        data: {{ MaterielCount|raw }},
+                        backgroundColor: ["pink","green","blue","brown","black","white"]
+
+                    }]
+                },
+                options: {
+                    scales: {
+
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            })
+        </script>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+
+                <!-- partial -->
+            </div>
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Campy.com 2022</span>
+                    </div>
+                </footer>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+{% endblock %}
